@@ -23,20 +23,22 @@ namespace Util.Extensions.Logging.Step
             this.args = args ?? emptyArgs;
             this.scope = logger.BeginStepScope(stepName);
 
-            logWithLevel(level, stepName);
+            doLog(stepName);
         }
 
         public void Commit() => completed = true;
 
-        private void logWithLevel(LogLevel level, string template)
+        private static void logWithLevel(ILogger logger, LogLevel level, string template, object[] args)
             => logger.Log(level, 0, new FormattedLogValues(template, args), null, (a, b) => a.ToString());
+
+        private void doLog(string template) => logWithLevel(logger, level, template, args);
 
         void IDisposable.Dispose()
         {
             if (!disposed)
             {
-                (var completeMsg, var l1) = completed ? ("Done", level) : ("Failed", LogLevel.Error);
-                logWithLevel(l1, stepName + " - " + completeMsg);
+                var completeMsg = completed ? "Done" : "Failed";
+                doLog(stepName + " - " + completeMsg);
                 scope.Dispose();
 
                 disposed = true;
