@@ -11,7 +11,6 @@ namespace Util.Extensions.Logging.Step
         private readonly LogLevel level;
         private readonly string stepName;
         private readonly object[] args;
-        private readonly IDisposable scope;
         private bool completed;
         private bool disposed;
 
@@ -21,7 +20,6 @@ namespace Util.Extensions.Logging.Step
             this.level = level;
             this.stepName = stepName;
             this.args = args ?? emptyArgs;
-            this.scope = logger.BeginStepScope(stepName);
 
             doLog(stepName);
         }
@@ -39,7 +37,6 @@ namespace Util.Extensions.Logging.Step
             {
                 var completeMsg = completed ? "Done" : "Failed";
                 doLog(stepName + " - " + completeMsg);
-                scope.Dispose();
 
                 disposed = true;
             }

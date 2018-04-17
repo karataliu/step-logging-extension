@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Util.Extensions.Logging.Step</AssemblyName>
-    <Version>1.0.0-beta2</Version>
+    <Version>1.0.0-beta3</Version>
   </PropertyGroup>
 
   <ItemGroup>
