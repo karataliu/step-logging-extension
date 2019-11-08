@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Internal;
 
 namespace Util.Extensions.Logging.Step
 {
@@ -26,10 +25,7 @@ namespace Util.Extensions.Logging.Step
 
         public void Commit() => completed = true;
 
-        private static void logWithLevel(ILogger logger, LogLevel level, string template, object[] args)
-            => logger.Log(level, 0, new FormattedLogValues(template, args), null, (a, b) => a.ToString());
-
-        private void doLog(string template) => logWithLevel(logger, level, template, args);
+        private void doLog(string template) => logger.Log(level, template, args);
 
         void IDisposable.Dispose()
         {
